@@ -20,5 +20,12 @@ RUN curl https://raw.githubusercontent.com/creationix/nvm/v$NVM_VERSION/install.
 # Set node path
 ENV NODE_PATH=$NVM_DIR/v$NODE_VERSION/lib/node_modules
 
+# Install Maven V3.6.3
+RUN apt purge maven* -y \
+  && cd /opt/ \
+  && wget https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz \
+  && tar -xvzf apache-maven-3.6.3-bin.tar.gz \
+  && mv apache-maven-3.6.3 maven
+
 # Set the path.
-ENV PATH=$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+ENV PATH=/opt/maven/bin:$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
